@@ -1,0 +1,25 @@
+<html>
+
+admin or super_admin can see this
+
+
+
+only super admin can see this
+<form action="/user/insert" method="post" enctype="multipart/form-data">
+   add admin<br>
+    用户名：<input type="text" name="name"><br>
+    用户密码：<input type="password" name="password"><br>
+  权限🗡  <select name="power">
+  <option value ="ROLE_USER">user</option>
+  <option value ="ROLE_ADMIN">admin</option>
+  <option value="ROLE_SUPER">super</option>
+</select>
+    <input type="submit" value="create"><br>
+</form>
+all admins 🙈: <br>
+
+
+
+
+<a href="/home/history">返回</a>
+</html>

@@ -1,0 +1,15 @@
+
+<html>
+	<h1>nothing here yet    </h1>
+	
+	current User :${currUser.name}<br>
+	<a href="/welcome/logout">click to quit</a><br>
+power :${currUser.power}
+<br>
+<#if currUser.power=='ROLE_USER'>
+no link for you 
+
+<#else>
+only admin or super admin can see this link:a <a href="/user/manage">click to manage</a>
+</#if>
+</html>
