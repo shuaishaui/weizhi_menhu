@@ -2,9 +2,11 @@ package com.wizz.demo.dao;
 
 import com.wizz.demo.model.Swiper;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface SwiperDao {
     @Insert("INSERT INTO swiper (rank,name,date) VALUES(#{rank}, #{name}, #{date})")
     @Options(useGeneratedKeys=true, keyProperty="id", keyColumn="id")   //keyProperty java对象的属性；keyColumn表示数据库的字段

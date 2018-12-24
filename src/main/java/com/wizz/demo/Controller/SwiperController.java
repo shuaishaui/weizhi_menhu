@@ -1,8 +1,10 @@
 package com.wizz.demo.Controller;
 
 import com.wizz.demo.dao.SwiperDao;
+import com.wizz.demo.model.Swiper;
 import com.wizz.demo.service.SwiperService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,11 +30,7 @@ public class SwiperController{
      */
     @RequestMapping(value = "/list")
     public Object list(){
-
-        params.clear();
-        params.put("photolist",swiperDao.getAll());
-        params.put("num",swiperDao.getAll().size());
-        params.put("error_code",0);
+        params = swiperService.list();
         return params;
 
     }
@@ -77,4 +75,12 @@ public class SwiperController{
 
 
 
+}
+@Controller
+@RequestMapping("/swiper")
+class SwiperHtml{
+    @RequestMapping("/uploadpage")
+    public  Object uploadPage(){
+        return "upload";
+        }
 }
