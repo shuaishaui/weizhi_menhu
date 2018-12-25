@@ -25,7 +25,8 @@ public class SwiperServiceImpl implements SwiperService {
     public    int MAXNUM ;
     @Value("${web.swiper-maxsize}")
     public    int MAXSIZE ;
-
+    @Value("${img.domain.name}")
+    public String imgDomain;
 
     @Autowired
     private SwiperDao swiperDao;
@@ -99,7 +100,18 @@ public class SwiperServiceImpl implements SwiperService {
         List<Swiper> tmp=new ArrayList<Swiper>();
         tmp=swiperDao.getAll();
         Collections.sort(tmp,comparatorr);
-        params.put("photolist",tmp);
+        List<HashMap<String,Object>> photolist = new ArrayList();
+
+        for (Swiper i:tmp){
+            HashMap<String ,Object> item= new HashMap<>();
+            item.put("id",i.getId());
+            item.put("rank",i.getRank());
+            item.put("name",i.getName());
+            item.put("date",i.getDate());
+            item.put("imgurl",imgDomain+i.getName());
+            photolist.add(item);
+        }
+        params.put("photolist",photolist);
         System.out.println(swiperDao.getAll().getClass().toString());
         params.put("num",swiperDao.getAll().size());
         params.put("error_code",0);
