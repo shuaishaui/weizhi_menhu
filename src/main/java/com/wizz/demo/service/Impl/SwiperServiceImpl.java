@@ -13,6 +13,8 @@ import java.io.File;
 import java.util.*;
 @PropertySource({"application.properties"})
 @Service
+
+
 public class SwiperServiceImpl implements SwiperService {
     private Map<String,Object> params = new HashMap<>();
 
@@ -37,7 +39,6 @@ public class SwiperServiceImpl implements SwiperService {
         int maxSize=MAXSIZE;
         System.out.println("size is "+fileSize);
         System.out.println("上传的文件名为：" + fileName+" 后缀名: "+suffixName);
-
         if (fileSize>maxSize){
             params.put("error_code",-3);
             params.put("msg","Size Exceeded, max is "+maxSize/1024+"KB the File is "+fileSize/1024+" KB");
@@ -79,11 +80,31 @@ public class SwiperServiceImpl implements SwiperService {
         }
         catch (Exception e){
             params.put("error_code",-1000);
-            params.put("msg","内部错误");
+            params.put("msg","内部错误"+e);
         }
         return params;
     }
 
+    public  Comparator<Swiper> comparatorr = new Comparator<Swiper>()
+    {
+        @Override
+        public int compare(Swiper o1, Swiper o2){
+            return o1.getRank()<o2.getRank()?-1:1;
+        }
+    };
+
+    @Override
+    public Map<String,Object> list(){
+        params.clear();
+        List<Swiper> tmp=new ArrayList<Swiper>();
+        tmp=swiperDao.getAll();
+        Collections.sort(tmp,comparatorr);
+        params.put("photolist",tmp);
+        System.out.println(swiperDao.getAll().getClass().toString());
+        params.put("num",swiperDao.getAll().size());
+        params.put("error_code",0);
+        return params;
+    }
     @Override
     public Map<String,Object>del(int id){
         params.clear();
@@ -111,7 +132,8 @@ public class SwiperServiceImpl implements SwiperService {
         }
         catch (Exception E){
             params.put("error_code",-1000);
-            params.put("msg","内部错误");
+            params.put("msg","内部错误"+E);
+            System.out.println(E);
             return params;
         }
     }
