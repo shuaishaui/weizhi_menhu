@@ -14,65 +14,42 @@ import java.util.Map;
 @Service
 public class SysFileServiceImpl implements SysFileService {
     @Autowired
-    private SysFileDao sysFileDao;
+    private SysFileDao sysFiledao;
 
 
     private String dirPath = "D:/files-data";
 
-    @Override
-    public void saveFile(MultipartFile file[], Map<String, Object> param) throws Exception {
-        if (file == null || file.length <= 0) {
-            throw new Exception("文件不得为空！");
-        }
-//        String[] imgUrls = new String[2];
-//        for (int i = 0; i < file.length; i++) {
-//            String name = ossClient.uploadImg2Oss(file[i]);
-//            String imgUrl = ossClient.getImgUrl(name);
-//            imgUrls[i] = imgUrl;
-//        }
-        //将上传的文件保存至本地服务器 返回最终路径
-        String[] desPath = saveFileToServer(file);
-        //保存相关资料数据
-        SysFile sysFile = new SysFile();
-        sysFile.setContent(param.get("content").toString());
-        sysFile.setFileName(file[0].getOriginalFilename());
-        sysFile.setFilePath(desPath[0]);
-        sysFile.setFileName1(file[1].getOriginalFilename());
-        sysFile.setFilePath1(desPath[1]);
 
-        sysFile.setTheme(param.get("theme").toString());
-        sysFileDao.save(sysFile);
-    }
 
     @Override
     public List<SysFile> getList(SysFile sysFile) {
-        return sysFileDao.getList(sysFile);
+        return sysFiledao.getList(sysFile);
     }
 
     @Override
     public SysFile getById(int id) {
-        return sysFileDao.get(id);
+        return sysFiledao.get(id);
     }
 
     @Override
-    public void update(MultipartFile[] file,Map param) {
+    public void update(MultipartFile file,Map param,int id) {
         //将上传的文件保存至本地服务器 返回最终路径
-        String[] desPath = saveFileToServer(file);
+        String desPath = saveFileToServer(file);
         //保存相关资料数据
         SysFile sysFile = new SysFile();
         sysFile.setContent(param.get("content").toString());
-        sysFile.setFileName(file[0].getOriginalFilename());
-        sysFile.setFilePath(desPath[0]);
-        sysFile.setFileName1(file[1].getOriginalFilename());
-        sysFile.setFilePath1(desPath[1]);
+        sysFile.setFileName(file.getOriginalFilename());
+        sysFile.setFilePath(desPath);
+
+        sysFile.setId(id);
 
         sysFile.setTheme(param.get("theme").toString());
-        sysFileDao.update(sysFile);
+        sysFiledao.update(sysFile);
     }
 
     @Override
     public void delete(int id) {
-        sysFileDao.del(id);
+        sysFiledao.del(id);
     }
 
     /*************************************************************************************/
@@ -81,25 +58,23 @@ public class SysFileServiceImpl implements SysFileService {
      *
      * @param file
      */
-    private String[] saveFileToServer(MultipartFile[] file) {
-        String[] paths = new String[file.length];
-        for (int i = 0; i < file.length; i++) {
-            String fileName = file[i].getOriginalFilename();
-            //文件存放路径判断
-            File destFile = new File(dirPath);
-            if (destFile.exists()) {//如果存在
-                //判断文件是否存在并保存
-                isExist(file[i], destFile, fileName);
-            } else {
-                //不存在就创建文件夹
-                destFile.mkdir();
-                //判断文件是否存在并保存
-                isExist(file[i], destFile, fileName);
-            }
-            paths[i] = dirPath + "/" + fileName;
+    private String saveFileToServer(MultipartFile file) {
+        String path = "";
+        String fileName = file.getOriginalFilename();
+        //文件存放路径判断
+        File destFile = new File(dirPath);
+        if (destFile.exists()) {//如果存在
+            //判断文件是否存在并保存
+            isExist(file, destFile, fileName);
+        } else {
+            //不存在就创建文件夹
+            destFile.mkdir();
+            //判断文件是否存在并保存
+            isExist(file, destFile, fileName);
         }
-        return paths;
+        return dirPath + "/" + fileName;
     }
+
 
     /**
      * 判断文件是否存在 并且保存
@@ -133,5 +108,4 @@ public class SysFileServiceImpl implements SysFileService {
             e.printStackTrace();
         }
     }
-
 }

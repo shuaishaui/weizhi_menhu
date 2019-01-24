@@ -9,16 +9,15 @@
         <result property="content" column="content" jdbcType="VARCHAR"/>
         <result property="fileName" column="file_name" jdbcType="VARCHAR"/>
         <result property="filePath" column="file_path" jdbcType="VARCHAR"/>
-        <result property="fileName1" column="file_name1" jdbcType="VARCHAR"/>
-        <result property="filePath1" column="file_path1" jdbcType="VARCHAR"/>
+
         <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
         <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <insert id="save" parameterType="com.wizz.demo.model.SysFile">
         insert into sys_file
-        (theme,file_name,file_path,file_name1,file_path1,content,create_date)values(
-        #{theme},#{fileName},#{filePath},#{fileName1},#{filePath1},#{content},now()
+        (theme,file_name,file_path,content,create_date)values(
+        #{theme},#{fileName},#{filePath},#{content},now()
         )
     </insert>
 
@@ -33,8 +32,7 @@
         content = #{content},
         file_name = #{fileName},
         file_path = #{filePath},
-        file_name1 = #{fileName1},
-        file_path1 = #{filePath1},
+
         update_date = now()
         where id = #{id}
     </update>
@@ -64,8 +62,7 @@
         theme as theme,
         file_name as fileName,
         file_path as filePath,
-        file_name1 as fileName1,
-        file_path1 as filePath1,
+
         create_date as createDate,
         update_date as updateDate
         from sys_file where id = #{id}

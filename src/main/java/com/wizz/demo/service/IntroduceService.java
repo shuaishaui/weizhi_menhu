@@ -31,11 +31,12 @@ public interface IntroduceService {
      * 修改
      * @param file
      */
-    void update(MultipartFile file, Map param);
+    void update(MultipartFile file, Map param,int id);
 
     /**
      * 根据id删除
      * @param id
      */
     void delete(int id);
+
 }

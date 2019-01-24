@@ -1,9 +1,10 @@
 package com.wizz.demo.dao;
 
 import com.wizz.demo.model.SysFile;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface SysFileDao {
     /**
      * 添加
