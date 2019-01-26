@@ -31,7 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                     .antMatchers("/user/**").hasRole("SUPER")//hasAnyRole("SUPER","ADMIN")
-                    .antMatchers("/history2/manage/**","/manage/**","/introduce/manage/**","/system/manage/**","/swiper/manage/**").hasAnyRole("SUPER","ADMIN")
+                    .antMatchers("/history2/manage/**","/manage/**","/introduce/manage/**","/system/manage/**").hasAnyRole("SUPER","ADMIN")
                     .and()
                 .formLogin()
                     .loginPage("/welcome/login")//指定login的界面
