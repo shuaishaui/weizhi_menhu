@@ -5,6 +5,7 @@ import com.wizz.demo.model.Swiper;
 import com.wizz.demo.service.SwiperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -83,4 +84,14 @@ class SwiperHtml{
     public  Object uploadPage(){
         return "upload";
         }
+}
+
+@Controller
+
+
+class apitest{
+    @RequestMapping("/api/123")
+    public  Object uploadPage(){
+        return "upload";
+    }
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -70,13 +71,7 @@ public class SwiperServiceImpl implements SwiperService {
             Swiper swiper = new Swiper();
             swiper.setName(fileName);
             swiper.setDate(new Date());
-            int newrank=-1;
-            for (Swiper tmp:resultSet){
-                if (tmp.getId()>newrank)
-                    newrank=tmp.getRank();
-                System.out.println(newrank);
-            }
-            swiper.setRank(newrank+1);
+            swiper.setRank(resultSet.size());
             swiperDao.insert(swiper);
         }
         catch (Exception e){
