@@ -44,7 +44,7 @@ public class SysFileController{
      * 根据id删除
      * @return
      */
-    @RequestMapping("/manage/delete/{id}")
+    @RequestMapping("/delete/{id}")
     @ResponseBody
     public ResultData delete(@PathVariable("id") int id){
         fileService.delete(id);
@@ -59,50 +59,22 @@ public class SysFileController{
      * @param file
      * @param param
      */
-    @RequestMapping(value = "/manage/upload", method = RequestMethod.POST)
-    @ResponseBody
-    public ResultData upload(@RequestParam("file") MultipartFile[] file, @RequestParam Map<String, Object> param) {
-        Object t = param.get("theme");
-        if(t == null || t.toString().equals("")){
-            return ResultUtils.error("模块主题不能为空！");
-        }
-        String theme = t.toString();
-        if(theme.toCharArray().length > 10){
-            return ResultUtils.error("主题不能超过10个汉字!");
-        }
-        Object content = param.get("content");
-        if(content== null || content.toString().equals("")){
-            return ResultUtils.error("模块简介不能为空！");
-        }
-        String c = content.toString();
-        if(c.toCharArray().length > 150){
-            return ResultUtils.error("简介不能超过150个汉字!");
-        }
 
-        try {
-            fileService.saveFile(file,param);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        ResultData res = new ResultData();
-        res.setMsg("成功添加！");
-        return res;
-    }
 
     /**
      * 修改
      * @param file
      * @param param
      */
-    @RequestMapping(value = "/manage/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public ResultData update(@RequestParam("file") MultipartFile[] file, @RequestParam Map<String, Object> param) {
+    public ResultData update(@RequestParam("file") MultipartFile file, @RequestParam Map<String, Object> param,@PathVariable("id") int id) {
         Object t = param.get("theme");
         if(t == null || t.toString().equals("")){
             return ResultUtils.error("模块主题不能为空！");
         }
         String theme = t.toString();
-        if(theme.toCharArray().length > 10){
+        if(theme.toCharArray().length > 20){
             return ResultUtils.error("主题不能超过10个汉字!");
         }
         Object content = param.get("content");
@@ -110,11 +82,11 @@ public class SysFileController{
             return ResultUtils.error("模块简介不能为空！");
         }
         String c = content.toString();
-        if(c.toCharArray().length > 150){
+        if(c.toCharArray().length > 300){
             return ResultUtils.error("简介不能超过150个汉字!");
         }
         try {
-            fileService.update(file,param);
+            fileService.update(file,param,id);
         } catch (Exception e) {
             e.printStackTrace();
         }

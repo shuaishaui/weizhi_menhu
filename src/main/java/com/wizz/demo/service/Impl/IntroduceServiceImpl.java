@@ -15,8 +15,9 @@ import java.util.Map;
 @Service
 public class IntroduceServiceImpl implements IntroduceService {
 
+
     @Autowired
-    private IntroduceDao introduceDao;
+    private IntroduceDao introducedao;
 
 
     private String dirPath = "D:/files-data";
@@ -35,21 +36,21 @@ public class IntroduceServiceImpl implements IntroduceService {
         in.setFilePath(desPath);
 
         in.setTheme(param.get("theme").toString());
-        introduceDao.save(in);
+        introducedao.save(in);
     }
 
     @Override
     public List<Introduce> getList(Introduce introduce) {
-        return introduceDao.getList(introduce);
+        return introducedao.getList(introduce);
     }
 
     @Override
     public Introduce getById(int id) {
-        return introduceDao.get(id);
+        return introducedao.get(id);
     }
 
     @Override
-    public void update(MultipartFile file, Map param) {
+    public void update(MultipartFile file, Map param,int id) {
         //将上传的文件保存至本地服务器 返回最终路径
         String desPath = saveFileToServer(file);
         //保存相关资料数据
@@ -59,15 +60,21 @@ public class IntroduceServiceImpl implements IntroduceService {
         introduce.setFilePath(desPath);
 
         introduce.setTheme(param.get("theme").toString());
-        introduceDao.update(introduce);
+        introduce.setId(id);
+        introducedao.update(introduce);
     }
 
     @Override
     public void delete(int id) {
-        introduceDao.del(id);
+        introducedao.del(id);
     }
 
-
+    /*************************************************************************************/
+    /**
+     * 将文件保存至服务器路径
+     *
+     * @param file
+     */
     private String saveFileToServer(MultipartFile file) {
         String path = "";
         String fileName = file.getOriginalFilename();
@@ -87,7 +94,8 @@ public class IntroduceServiceImpl implements IntroduceService {
 
     /**
      * 判断文件是否存在 并且保存
-     * @param file   需要保存的文件
+     *
+     * @param file     需要保存的文件
      * @param destFile 保存路径
      * @param fileName 文件名
      */

@@ -1,9 +1,10 @@
 package com.wizz.demo.dao;
 
 import com.wizz.demo.model.Introduce;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface IntroduceDao {
     /**
      * 添加
