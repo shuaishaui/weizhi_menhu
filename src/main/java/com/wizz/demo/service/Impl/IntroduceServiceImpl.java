@@ -4,6 +4,7 @@ import com.wizz.demo.dao.IntroduceDao;
 import com.wizz.demo.model.Introduce;
 import com.wizz.demo.service.IntroduceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,8 +21,9 @@ public class IntroduceServiceImpl implements IntroduceService {
     private IntroduceDao introducedao;
 
 
-    private String dirPath = "D:/files-data";
-
+    @Value("${web.upload-path}")
+    public    String dirPath ;
+//    private String dirPath = "D:/files-data";
     @Override
     public void saveFile(MultipartFile file, Map<String, Object> param) throws Exception {
         if (file == null) {

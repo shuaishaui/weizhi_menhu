@@ -4,6 +4,7 @@ import com.wizz.demo.dao.SysFileDao;
 import com.wizz.demo.model.SysFile;
 import com.wizz.demo.service.SysFileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,7 +18,10 @@ public class SysFileServiceImpl implements SysFileService {
     private SysFileDao sysFiledao;
 
 
-    private String dirPath = "D:/files-data";
+
+    @Value("${web.upload-path}")
+    public    String dirPath ;
+//    private String dirPath = "D:/files-data";
 
 
 
