@@ -12,7 +12,7 @@ public interface SysFileService {
      * @param file
      * @param param
      */
-    void saveFile(MultipartFile[] file, Map<String,Object> param) throws Exception;
+
 
     /**
      * 获取所有数据
@@ -31,11 +31,12 @@ public interface SysFileService {
      * 修改
      * @param sysFile
      */
-    void update(MultipartFile[] file,Map param);
+    void update(MultipartFile file,Map param,int id);
 
     /**
      * 根据id删除
      * @param id
      */
     void delete(int id);
+
 }
