@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.Map;
 @RestController
 @RequestMapping("/swiper")
-@CrossOrigin
 public class SwiperController{
     private Map<String,Object> params = new HashMap<>();
 
@@ -85,4 +84,14 @@ class SwiperHtml{
     public  Object uploadPage(){
         return "upload";
         }
+}
+
+@Controller
+
+
+class apitest{
+    @RequestMapping("/api/123")
+    public  Object uploadPage(){
+        return "upload";
+    }
 }
