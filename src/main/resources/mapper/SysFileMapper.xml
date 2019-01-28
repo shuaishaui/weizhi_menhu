@@ -26,15 +26,21 @@
     </delete>
 
     <update id="update" parameterType="com.wizz.demo.model.SysFile">
-        update sys_file SET
-        theme = #{theme},
+        update sys_file
+        <set>
+             <if test="theme !=null and theme !=''">theme = #{theme},</if>
+            <if test="content !=null and content !=''"> content = #{content},</if>
+            <if test="fileName !=null and fileName !=''">file_name = #{fileName},</if>
+            <if test="filePath !=null and filePath !=''">file_path = #{filePath},</if>
 
-        content = #{content},
-        file_name = #{fileName},
-        file_path = #{filePath},
 
-        update_date = now()
+            update_date = now()
+
+        </set>
+
+
         where id = #{id}
+
     </update>
 
     <select id="getList" resultMap="BaseResultMap" parameterType="com.wizz.demo.model.SysFile">
