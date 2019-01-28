@@ -32,6 +32,7 @@ public interface IntroduceService {
      * @param file
      */
     void update(MultipartFile file, Map param,int id);
+    void update1(Map param,int id);
 
     /**
      * 根据id删除

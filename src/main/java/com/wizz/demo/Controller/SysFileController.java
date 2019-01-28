@@ -14,7 +14,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/system")
-public class SysFileController{
+public class SysFileController {
 
     @Autowired
     private SysFileService fileService;
@@ -22,31 +22,37 @@ public class SysFileController{
 
     /**
      * 获取所有数据
+     *
      * @return
      */
     @RequestMapping("/getList")
     @ResponseBody
-    public List<SysFile> getList(SysFile sysFile){
+    public
+    List<SysFile> getList(SysFile sysFile) {
         return fileService.getList(sysFile);
     }
 
     /**
      * 根据id获取单个数据
+     *
      * @return
      */
     @RequestMapping("/get/{id}")
     @ResponseBody
-    public SysFile get(@PathVariable("id") int id){
+    public
+    SysFile get(@PathVariable("id") int id) {
         return fileService.getById(id);
     }
 
     /**
      * 根据id删除
+     *
      * @return
      */
     @RequestMapping("/delete/{id}")
     @ResponseBody
-    public ResultData delete(@PathVariable("id") int id){
+    public
+    ResultData delete(@PathVariable("id") int id) {
         fileService.delete(id);
         ResultData res = new ResultData();
         res.setMsg("删除成功!");
@@ -63,36 +69,68 @@ public class SysFileController{
 
     /**
      * 修改
+     *
      * @param file
      * @param param
      */
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public ResultData update(@RequestParam("file") MultipartFile file, @RequestParam Map<String, Object> param,@PathVariable("id") int id) {
+    public
+    ResultData update(@RequestParam(value = "file", required = false) MultipartFile file, @RequestParam Map<String, Object> param, @PathVariable("id") int id) {
         Object t = param.get("theme");
-        if(t == null || t.toString().equals("")){
+        if (t == null || t.toString().equals("")) {
             return ResultUtils.error("模块主题不能为空！");
         }
         String theme = t.toString();
-        if(theme.toCharArray().length > 20){
+        if (theme.toCharArray().length > 20) {
             return ResultUtils.error("主题不能超过10个汉字!");
         }
         Object content = param.get("content");
-        if(content == null || content.toString().equals("")){
+        if (content == null || content.toString().equals("")) {
             return ResultUtils.error("模块简介不能为空！");
         }
         String c = content.toString();
-        if(c.toCharArray().length > 300){
+        if (c.toCharArray().length > 300) {
             return ResultUtils.error("简介不能超过150个汉字!");
         }
-        try {
-            fileService.update(file,param,id);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        ResultData res = new ResultData();
-        res.setMsg("修改成功！");
-        return res;
-    }
+//        try {
+//            fileService.update(file,param,id);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        ResultData res = new ResultData();
+//        res.setMsg("修改成功！");
+//        return res;
+//    }
+//
+//}
+        if (file == null) {
+            try {
+                fileService.update1(param, id);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            ResultData res = new ResultData();
+            res.setMsg("修改成功！");
+            return res;
+        } else {
+            try {
+                fileService.update(file, param, id);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
+
+            ResultData res = new ResultData();
+            res.setMsg("修改成功！");
+            return res;
+        }
+    }
 }
+
+
+
+
+
+
+
